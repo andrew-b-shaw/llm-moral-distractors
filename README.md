@@ -1,17 +1,30 @@
 # llm_moral_plasticity
-**Useful Commands:**
-```CUDA_VISIBLE_DEVICES=0 python -m src.evaluate --experiment-name "flan-t5-small-high" --dataset "NEW_moralchoice_high_ambiguity" --model "google/flan-t5-small" --question-types "ab" "compare" --eval-nb-samples 20```
 
-```python -m src.evaluate     --experiment-name "moraltest_2"     --dataset "NEW_moralchoice_high_ambiguity"     --model "google/flan-t5-small"     --question-types "ab"     --eval-nb-samples 5 --eval-max-tokens 1```
+## Research Question:
+Are the “moral values” of LLMs robust to morally irrelevant situational distractors? We investigate this question as part of our CSE 481M Natural Language Processing Capstone project. This repository serves as a platform to reproduce our results.
 
-```python -m src.collect   --experiment-name "moraltest_2" --dataset "NEW_moralchoice_high_ambiguity"```
+![image](https://github.com/user-attachments/assets/9d9c3c53-c526-4755-8b58-a1e8e0ec6d89)
 
-**Research Question:** Are the “moral values” of LLMs robust to morally irrelevant situational distractors?
 
-**Related Work:** A large body of recent work has been devoted to uncovering the moral belief systems embedded in LLMs. Marrafini et al. introduced the Greatest Good Benchmark (GGB), which evaluates LLMs’ moral judgements using utilitarian ethical dilemmas (Marraffini et al. 2024). Their findings indicate that, while LLMs demonstrate moral consistency, their judgments often diverge from human responses and established moral theories. Seeking a more nuanced understanding, Ji et al. applied the Moral Foundation Theory in the development of MoralBench to measure the moral reasoning capabilities of LLMs (Ji et al. 2024). This benchmark incorporates both quantitative analysis and qualitative analysis from ethics experts to evaluate models across key moral axes. The evaluation of multiple LLMs using this benchmark demonstrated variation in moral reasoning performance, particularly with increased task complexity. Scherrer et al. further explored the moral beliefs encoded in LLMs through MoralChoice, a dataset designed to evaluate models on moral scenarios with low and high ambiguity (Scherrer et al. 2023). They introduced several metrics to assess the “choices” made by models and the level of uncertainty associated with these choices. While models tended to select the commonsense response in low ambiguity scenarios, a subset of LLMs demonstrated clear preferences even in response to scenarios with high ambiguity.
+## Useful Commands
 
-Interestingly however, empirical work in moral psychology has increasingly called into question the stability of human moral behavior. Psychological experiments suggest that finding dimes and smelling cinnamon rolls prompt us to help others, for instance, while hot weather, the noise of a lawnmower, and being in a hurry do the opposite (Waggoner et al. 2022). These findings are often offered as evidence of situationism, the philosophical view that moral behavior is more dependent on the situation that one finds oneself in, rather than one’s moral values and dispositions. Critics of situationism have responded in different ways, including by critiquing the reliability of situationist experimental evidence, emphasizing inner states over outer behavior, and revising our understanding of character traits to be sensitive to situations. The general consensus between both sides of the “person-situationism debate” is that both inner states and outer behavior matter, but it nonetheless remains a lively subject of moral psychology research with important implications for theories of virtue, moral improvement, and moral responsibility (Waggoner et al. 2022).
+Run evaluation with specified experiment, dataset, model, and question types:
 
-Motivation: We observe that a gap exists between technical and moral psychology work when it comes to the stability of moral values in LLMs. Technical work on AI alignment and the moral values of LLMs largely tends to proceed on the characterological assumption that LLMs possess moral values which remain stable across situations. Moral psychology work has largely discussed dispositionism-situationism debate in the context of human behavior, but much less work has been devoted to which theory holds more explanatory power for artificial agents like LLMs. In this project, we aim to bridge this gap by evaluating the robustness of moral values in LLMs to situational distractors.
+```bash
+CUDA_VISIBLE_DEVICES=0 python -m src.evaluate \
+  --experiment-name "moraltest" \
+  --dataset "moralchoice_high_ambiguity" \
+  --model "google/flan-t5-small" \
+  --question-types "ab" \
+  --eval-nb-samples 5 \
+  --eval-max-tokens 1
+```
 
-Our findings may have important implications for ongoing research in areas like AI alignment. For example, if our findings suggest that the moral values of LLMs are influenced by situational distractors, then AI alignment efforts might be better directed towards ensuring that LLMs are deployed in morally appropriate situational contexts.
+Run result collection on experiment and specified dataset:
+
+```bash
+python -m src.collect \
+  --experiment-name "moraltest" \
+  --dataset "moralchoice_high_ambiguity"
+```
+
